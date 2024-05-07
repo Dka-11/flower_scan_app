@@ -1,3 +1,8 @@
+import 'dart:io';
+import 'dart:ui' as ui;
+import 'package:camera/camera.dart';
+import 'package:flower_scan/pages/camera_page.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flower_scan/pages/dialog_page.dart';
 
@@ -9,6 +14,28 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  File? uploadedImage;
+  int? imageHeight;
+  int? imageWidth;
+
+  void getImagePixels() async {
+    late File processedImage;
+    if(uploadedImage != null){
+      processedImage = uploadedImage!;
+    } else{
+      processedImage = File("assets/components/placeholder.png");
+    }
+    List<int> imageBytes = await processedImage.readAsBytes();
+    Uint8List uint8list = Uint8List.fromList(imageBytes);
+    ui.Codec codec = await ui.instantiateImageCodec(uint8list);
+    ui.FrameInfo frameInfo = await codec.getNextFrame();
+    ui.Image image = frameInfo.image;
+    setState(() {
+      imageWidth = image.width;
+      imageHeight = image.height;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,10 +58,29 @@ class _HomePageState extends State<HomePage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              ElevatedButton(onPressed: (){
+              ElevatedButton(
+                onPressed: () async {
+                  await availableCameras().then((value) async{
+                    final result = await Navigator.push<File?>(context,
+                    MaterialPageRoute(builder: 
+                    (_) => CameraPage(cameras: value)
+                    )
+                    );
 
+                    if (result != null){
+                      setState(() {
+                        uploadedImage = result;
+                        getImagePixels();
+                        if (kDebugMode) {
+                          print("$imageHeight x $imageWidth");
+                        }
+                      });
+                    }
+                  }
+                );
               }, 
-              child: const Text("Camera")),
+              child: const Text("Camera")
+              ),
               ElevatedButton(onPressed: (){
 
               },
