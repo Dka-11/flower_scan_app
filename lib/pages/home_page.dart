@@ -54,7 +54,28 @@ class _HomePageState extends State<HomePage> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          //Placeholder for image
+          // Start Placeholder Image
+          Center(
+            child: 
+            uploadedImage == null ?
+            Image.asset(
+              "",
+              height: MediaQuery.of(context).size.height/1.7
+            ):
+            Column(
+              children: [
+                Image.file(
+                  uploadedImage!,
+                  height: MediaQuery.of(context).size.height/1.7
+                ),
+                imageHeight != null ?
+                Text("Dimension of uploaded image : $imageHeight x $imageWidth"):
+                const Text("Failed to get image's dimension")
+              ],
+            )
+          ),
+          const SizedBox(height: 20),
+          // End Placeholder Image
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
