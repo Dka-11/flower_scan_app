@@ -13,7 +13,7 @@ class DialogPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Image.asset(
-              'images/Bunga Anyelir.jpg',
+              'assets/images/Anyelir.JPG',
               width: 200,
               height: 200,
             ),
