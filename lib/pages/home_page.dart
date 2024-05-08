@@ -59,7 +59,7 @@ class _HomePageState extends State<HomePage> {
             child: 
             uploadedImage == null ?
             Image.asset(
-              "",
+              'assets/images/placeholder_images.png',
               height: MediaQuery.of(context).size.height/1.7
             ):
             Column(
