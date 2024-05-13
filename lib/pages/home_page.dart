@@ -23,7 +23,7 @@ class _HomePageState extends State<HomePage> {
     if(uploadedImage != null){
       processedImage = uploadedImage!;
     } else{
-      processedImage = File("assets/components/placeholder.png");
+      return;
     }
     List<int> imageBytes = await processedImage.readAsBytes();
     Uint8List uint8list = Uint8List.fromList(imageBytes);
@@ -41,6 +41,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Flower Scan"),
+        backgroundColor: Colors.green[400],
         actions: [
           IconButton(
             onPressed: (){
@@ -68,9 +69,9 @@ class _HomePageState extends State<HomePage> {
                   uploadedImage!,
                   height: MediaQuery.of(context).size.height/1.7
                 ),
-                imageHeight != null ?
-                Text("Dimension of uploaded image : $imageHeight x $imageWidth"):
-                const Text("Failed to get image's dimension")
+                // imageHeight != null ?
+                // Text("Dimension of uploaded image : $imageHeight x $imageWidth"):
+                // const Text("Failed to get image's dimension")
               ],
             )
           ),
