@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:ui' as ui;
 import 'package:camera/camera.dart';
 import 'package:flower_scan/pages/camera_page.dart';
+import 'package:flower_scan/pages/get_image_page.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flower_scan/pages/dialog_page.dart';
@@ -103,10 +104,16 @@ class _HomePageState extends State<HomePage> {
               }, 
               child: const Text("Camera")
               ),
-              ElevatedButton(onPressed: (){
+              ElevatedButton(onPressed: () async {
+                final result = await GetImage().getImageFromGallery(context);
 
+                if (result != null){
+                  setState(() {
+                    uploadedImage = result;
+                  });
+                }
               },
-              child: const Text("Upload Photo"))
+              child: const Text("Gallery"))
             ],
           ),
           const SizedBox(height: 20),
