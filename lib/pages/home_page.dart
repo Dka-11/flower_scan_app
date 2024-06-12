@@ -6,6 +6,8 @@ import 'package:flower_scan/pages/get_image_page.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flower_scan/pages/dialog_page.dart';
+import 'package:flower_scan/pages/prediction_page.dart';
+import 'package:flower_scan/pages/results_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -35,6 +37,27 @@ class _HomePageState extends State<HomePage> {
       imageWidth = image.width;
       imageHeight = image.height;
     });
+  }
+
+  Future<void> predictImage() async {
+    if (uploadedImage == null) return;
+
+    final result = await PredictionService.predictImage(uploadedImage!, useLocal: true);
+
+    if (result != null) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => PredictionResultScreen(
+            image: uploadedImage!,
+            classificationResult: result['classificationResult'],
+            accuracy: result['accuracy'],
+          ),
+        ),
+      );
+    } else {
+      print('Failed to predict image.');
+    }
   }
 
   @override
@@ -89,14 +112,13 @@ class _HomePageState extends State<HomePage> {
                     (_) => CameraPage(cameras: value)
                     )
                     );
-
                     if (result != null){
                       setState(() {
                         uploadedImage = result;
-                        getImagePixels();
-                        if (kDebugMode) {
-                          print("$imageHeight x $imageWidth");
-                        }
+                        // getImagePixels();
+                        // if (kDebugMode) {
+                        //   print("$imageHeight x $imageWidth");
+                        // }
                       });
                     }
                   }
@@ -117,10 +139,8 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
           const SizedBox(height: 20),
-
-          ElevatedButton(onPressed: (){
-
-          },
+          ElevatedButton(
+            onPressed:predictImage,
           child: const Text("Predict "))
         ],
       ),
