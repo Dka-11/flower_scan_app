@@ -37,8 +37,8 @@ class PredictionService {
 
   static const String gcpApiUrl = 'https://flowers-api-do6lrlvoia-et.a.run.app/Upload'; // Replace with actual GCP URL
 
-  static Future<Map<String, dynamic>?> predictImage(File image, {bool useLocal = false}) async {
-    final String apiUrl = useLocal ? localApiUrl : gcpApiUrl;
+  static Future<Map<String, dynamic>?> predictImage(File image, {bool useLocal = true}) async {
+    final String apiUrl = useLocal ? gcpApiUrl : localApiUrl;
 
     try {
       final request = http.MultipartRequest(
