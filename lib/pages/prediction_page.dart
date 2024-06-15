@@ -47,17 +47,21 @@ class PredictionService {
       );
       request.files.add(await http.MultipartFile.fromPath('file', image.path));
       final response = await request.send();
+      final res = await http.Response.fromStream(response);
+      final data = json.decode(res.body);
 
       if (response.statusCode == 200) {
-        final res = await http.Response.fromStream(response);
-        final data = json.decode(res.body);
         return {
+          'code': response.statusCode,
           'accuracy': data['accuracy'],
           'classificationResult': data['classification result'],
         };
       } else {
         print('Failed to predict image with status code: ${response.statusCode}');
-        return null;
+        return {
+          'code': response.statusCode,
+          'error': data['error'],
+        };
       }
     } catch (e) {
       print('Failed to predict image with error: $e');
