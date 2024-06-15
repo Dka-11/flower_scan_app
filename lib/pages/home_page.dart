@@ -3,11 +3,13 @@ import 'dart:ui' as ui;
 import 'package:camera/camera.dart';
 import 'package:flower_scan/pages/camera_page.dart';
 import 'package:flower_scan/pages/get_image_page.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flower_scan/widgets/error_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flower_scan/pages/dialog_page.dart';
+import 'package:flower_scan/widgets/dialog_page.dart';
 import 'package:flower_scan/pages/prediction_page.dart';
 import 'package:flower_scan/pages/results_page.dart';
+import 'package:flower_scan/widgets/loading_widget.dart';
+import 'package:flutter/services.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -20,6 +22,7 @@ class _HomePageState extends State<HomePage> {
   File? uploadedImage;
   int? imageHeight;
   int? imageWidth;
+  bool _isLoading = false;
 
   void getImagePixels() async {
     late File processedImage;
@@ -39,24 +42,45 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  void deleteUploadedImage() {
+    setState(() {
+      uploadedImage = null;
+    });
+  }
+
   Future<void> predictImage() async {
-    if (uploadedImage == null) return;
+    setState(() {
+      _isLoading = true;
+    });
+
+    if (uploadedImage == null) {
+      setState(() {
+        _isLoading = false;
+      });
+      showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return const ErrorDialog();
+      },
+    );
+      return;
+    }
 
     final result = await PredictionService.predictImage(uploadedImage!, useLocal: true);
 
     if (result != null) {
+      setState(() {
+        _isLoading = false;
+      });
       Navigator.push(
         context,
         MaterialPageRoute(
           builder: (context) => PredictionResultScreen(
             image: uploadedImage!,
-            classificationResult: result['classificationResult'],
-            accuracy: result['accuracy'],
+            listOfData: result,
           ),
         ),
       );
-    } else {
-      print('Failed to predict image.');
     }
   }
 
@@ -76,7 +100,9 @@ class _HomePageState extends State<HomePage> {
           }, icon: const Icon(Icons.info))
         ],
       ),
-      body: Column(
+      body: _isLoading 
+      ? LoadingPage()
+      : Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           // Start Placeholder Image
@@ -99,7 +125,23 @@ class _HomePageState extends State<HomePage> {
               ],
             )
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 0),
+          uploadedImage == null
+          ? const SizedBox(height: 0)
+          : Container(
+            margin: const EdgeInsets.only(bottom: 12),
+            child: ElevatedButton(
+              onPressed:deleteUploadedImage,
+              style: ElevatedButton.styleFrom(
+                minimumSize: const Size(40, 40),
+                padding: const EdgeInsets.all(8),
+                backgroundColor: Colors.red
+              ),
+            child: const Icon(
+              Icons.close,
+              color: Colors.white,
+            )),
+          ),
           // End Placeholder Image
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
