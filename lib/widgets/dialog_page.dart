@@ -6,7 +6,10 @@ class DialogPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text("Cara pengambilan Gambar"),
+      title: const Text(
+        "Petunjuk",
+        textAlign: TextAlign.center,
+        ),
       content: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -19,13 +22,13 @@ class DialogPage extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             const Text(
-              "Catatan Petunjuk penggunaan Pengambilan gambar",
+              "Fokuskan pengambilan gambar pada bagian bunga seperti gambar di atas menggunakan kamera belakang",
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 20),
             ElevatedButton(onPressed: (){
               Navigator.of(context).pop();
-            }, child: const Text("Got it"))
+            }, child: const Text("Ok"))
           ],
         ),
       ),
