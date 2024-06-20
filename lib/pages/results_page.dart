@@ -8,7 +8,8 @@ class PredictionResultScreen extends StatelessWidget {
   // final String classificationResult;
   // final String accuracy;
 
-  PredictionResultScreen({
+  const PredictionResultScreen({
+    super.key, 
     required this.image,
     required this.listOfData,
     // required this.classificationResult,
