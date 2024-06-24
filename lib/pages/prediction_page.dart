@@ -35,7 +35,7 @@ class PredictionService {
   // Wifi (JTI-Polinema) :  http://192.168.56.17:5000 
   // LAN Rumah : 172.26.64.1
 
-  static const String gcpApiUrl = 'https://flowers-api-do6lrlvoia-et.a.run.app/Upload'; // Replace with actual GCP URL
+  static const String gcpApiUrl = 'https://flowers-model-api-rglnukfnjq-et.a.run.app/Upload'; // Replace with actual GCP URL
 
   static Future<Map<String, dynamic>?> predictImage(File image, {bool useLocal = true}) async {
     final String apiUrl = useLocal ? gcpApiUrl : localApiUrl;
