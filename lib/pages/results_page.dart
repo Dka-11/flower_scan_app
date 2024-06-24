@@ -61,7 +61,8 @@ class PredictionResultScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 Text(
-                  'Akurasi: $accuracyInNumber%',
+                  // 'Akurasi: $accuracyInNumber%',
+                  'Akurasi: ${accuracyInNumber?.toStringAsFixed(2)}%',
                   style: const TextStyle(fontSize: 20),
                   textAlign: TextAlign.center,
                 ),
