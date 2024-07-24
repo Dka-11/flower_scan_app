@@ -5,7 +5,7 @@ import 'package:flower_scan/pages/camera_page.dart';
 import 'package:flower_scan/pages/get_image_page.dart';
 import 'package:flower_scan/widgets/error_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flower_scan/widgets/dialog_page.dart';
+import 'package:flower_scan/pages/petunjuk_page.dart';
 import 'package:flower_scan/pages/prediction_page.dart';
 import 'package:flower_scan/pages/results_page.dart';
 import 'package:flower_scan/widgets/loading_widget.dart';
@@ -23,6 +23,43 @@ class _HomePageState extends State<HomePage> {
   int? imageHeight;
   int? imageWidth;
   bool _isLoading = false;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text("Petunjuk"),
+            content: const Wrap(
+              alignment: WrapAlignment.center,
+              children: [
+                Text(
+                  "Untuk mengetahui cara pengambilan gambar, silahkan klik ikon ",
+                  textAlign: TextAlign.center,
+                ),
+                Icon(Icons.info),
+                Text(
+                  " di pojok kanan atas.",
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text("OK"),
+              ),
+            ],
+          );
+        },
+      );
+    });
+  }
 
   void getImagePixels() async {
     late File processedImage;
@@ -95,7 +132,7 @@ class _HomePageState extends State<HomePage> {
             onPressed: (){
             showDialog(context: context, 
             builder: (BuildContext context){
-              return const DialogPage();
+              return const PetunjukPage();
             });
           }, icon: const Icon(Icons.info))
         ],
@@ -146,6 +183,17 @@ class _HomePageState extends State<HomePage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
+              ElevatedButton(onPressed: () async {
+                final result = await GetImage().getImageFromGallery(context);
+
+                if (result != null){
+                  setState(() {
+                    uploadedImage = result;
+                  });
+                }
+              },
+              child: const Text("Gallery")
+              ),
               ElevatedButton(
                 onPressed: () async {
                   await availableCameras().then((value) async{
@@ -168,22 +216,10 @@ class _HomePageState extends State<HomePage> {
               }, 
               child: const Text("Camera")
               ),
-              ElevatedButton(onPressed: () async {
-                final result = await GetImage().getImageFromGallery(context);
-
-                if (result != null){
-                  setState(() {
-                    uploadedImage = result;
-                  });
-                }
-              },
-              child: const Text("Gallery"))
+              ElevatedButton(onPressed: predictImage, 
+              child: const Text("Predict"))
             ],
           ),
-          const SizedBox(height: 20),
-          ElevatedButton(
-            onPressed:predictImage,
-          child: const Text("Predict "))
         ],
       ),
     );
