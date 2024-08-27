@@ -33,8 +33,8 @@ class PetunjukPage extends StatelessWidget {
                 height: 200,
               ),
               const SizedBox(height: 10),
-                const Text(
-                  "1. Gunakan kamera belakang untuk mendapatkan hasil yang lebih baik.",
+              const Text(
+                  "1. Tekan tombol Camera.                                                ",
                   textAlign: TextAlign.justify,
                 ),
               const Text(
@@ -42,7 +42,7 @@ class PetunjukPage extends StatelessWidget {
                   textAlign: TextAlign.justify,
                 ),
               const Text(
-                  "3. Pastikan pengambilan gambar tidak jauh dari bunga sehingga mendapatkan hasil yang maksimal.",
+                  "3. Pastikan pengambilan gambar tidak jauh dari bunga dan tampak jelas sehingga mendapatkan hasil yang maksimal.",
                   textAlign: TextAlign.justify,
                 ),
               const SizedBox(height: 20),
@@ -65,11 +65,7 @@ class PetunjukPage extends StatelessWidget {
                   textAlign: TextAlign.justify,
                 ),
                 const Text(
-                  "2.   Pilih gambar bunga yang akan diklasifikasi.                                        ",
-                  textAlign: TextAlign.justify,
-                ),
-                const Text(
-                  "3. Pastikan gambar bunga tampak jelas untuk mendapatkan hasil yang maksimal.",
+                  "2.   Pilih gambar bunga yang akan diprediksi.                                        ",
                   textAlign: TextAlign.justify,
                 ),
               const SizedBox(height: 50),
