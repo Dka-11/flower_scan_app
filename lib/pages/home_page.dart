@@ -4,12 +4,16 @@ import 'package:camera/camera.dart';
 import 'package:flower_scan/pages/camera_page.dart';
 import 'package:flower_scan/pages/get_image_page.dart';
 import 'package:flower_scan/widgets/error_widget.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flower_scan/pages/petunjuk_page.dart';
 import 'package:flower_scan/pages/prediction_page.dart';
 import 'package:flower_scan/pages/results_page.dart';
 import 'package:flower_scan/widgets/loading_widget.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -33,26 +37,38 @@ class _HomePageState extends State<HomePage> {
         builder: (BuildContext context) {
           return AlertDialog(
             title: const Text("Petunjuk"),
-            content: const Wrap(
-              alignment: WrapAlignment.center,
-              children: [
-                Text(
-                  "Untuk mengetahui cara pengambilan gambar, silahkan klik ikon ",
-                  textAlign: TextAlign.center,
-                ),
-                Icon(Icons.info),
-                Text(
-                  " di pojok kanan atas.",
-                  textAlign: TextAlign.center,
-                ),
-              ],
+            content: RichText(
+              textAlign: TextAlign.center,
+              text: const TextSpan(
+                children: [
+                  TextSpan(
+                    text: "Untuk mengetahui cara pengambilan gambar, silahkan klik ",
+                    style: TextStyle(
+                      color: Colors.black
+                    )
+                  ),
+                  WidgetSpan(
+                    alignment: PlaceholderAlignment.middle,
+                    child: Icon(Icons.info),
+                  ),
+                  TextSpan(
+                    text: " ikon di pojok kanan atas.",
+                    style: TextStyle(
+                      color: Colors.black
+                    )
+                  ),
+                ],
+              ),
             ),
             actions: [
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: const Text("OK"),
+                child: Text("OK",
+                style: TextStyle(
+                  color: Colors.green[700]
+                ),),
               ),
             ],
           );
@@ -179,6 +195,17 @@ class _HomePageState extends State<HomePage> {
               color: Colors.white,
             )),
           ),
+          ElevatedButton(onPressed: predictImage,
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.green[700]
+          ),
+              child: const Padding(
+                padding: EdgeInsets.only(bottom: 12, top: 12),
+                child: Text(
+                  "Predict", 
+                style: TextStyle(fontSize: 18, color: Colors.white),),
+              )),
+          const SizedBox(height: 30),
           // End Placeholder Image
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -192,7 +219,15 @@ class _HomePageState extends State<HomePage> {
                   });
                 }
               },
-              child: const Text("Gallery")
+              style: ElevatedButton.styleFrom(
+              ),
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 12, top: 12),
+                child: Text("Gallery", 
+                style: TextStyle(
+                  color: Colors.green[900],
+                ),),
+              )
               ),
               ElevatedButton(
                 onPressed: () async {
@@ -214,10 +249,14 @@ class _HomePageState extends State<HomePage> {
                   }
                 );
               }, 
-              child: const Text("Camera")
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 12, top: 12),
+                child: Text("Camera",
+                style: TextStyle(
+                  color: Colors.green[900]
+                ),),
+              )
               ),
-              ElevatedButton(onPressed: predictImage, 
-              child: const Text("Predict"))
             ],
           ),
         ],
