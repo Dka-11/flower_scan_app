@@ -1,17 +1,31 @@
-# flower_scan
+# Flower Scan App 
 
-A new Flutter project.
+### About
 
-## Getting Started
+The objective of this app is to streamline the buying and selling process by making it easier for buyers to identify flower species available in the shop by uploading the flower's picture, enhancing the overall shopping experience and aiding in informed purchasing decisions.
 
-This project is a starting point for a Flutter application.
+### Prerequisites
 
-A few resources to get you started if this is your first Flutter project:
+Before you begin, ensure you have met the following requirements:
+- You have installed the latest version of [Flutter](https://flutter.dev/docs/get-started/install) and [Dart](https://dart.dev/get-dart).
+- You are using a machine running on a supported OS (Windows, macOS, or Linux).
+- You have an emulator or a physical device set up for testing.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+### Getting Started
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-Flower Scan App
+1. Clone the `Flower Scan App` repository
+2. Run `cd app` to enter the app directory
+3. Run `flutter pub get` to download dependencies
+4. Run `flutter run` to start the app
+
+### Screenshots
+
+| No | Pages | Screenshot |
+| --- | --- | --- |
+| 01 | Start Pop-up | <img src="./assets/md/1.Start Popup App.jpeg" height="700"> |
+| 02 | Home Page | <img src="./assets/md/2.Halaman Utama.jpeg" height="700"> height="700">|
+| 03 | Tips Page |<img src="./assets/md/3.Cara Pengambilan Gambar.jpeg" height="700"> |
+| 04 | Camera Page | <img src="./assets/md/4. Camera.jpg" height="700"> |
+| 05 | Galeri Page | <img src="./assets/md/5. Galeri.jpg" height="700"> |
+| 05 | Loading Page | <img src="./assets/md/6.Loading Page.jpg" height="700"> |
+| 05 | Hasil Klasifikasi Page | <img src="./assets/md/7.Hasil Klasifikasi.jpg" height="700"> |
